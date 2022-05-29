@@ -1,35 +1,5 @@
 <?php
-	
-	/*ini_set("display_errors", 1);
-	ini_set("log_errors", 1);
-	ini_set("error_log", dirname(__FILE__), "/log.txt";
-	error_reporting(E_ALL);*/
-	$user = 'root';
-	$password = 'root';
-	$db = 'unityaccess';
-	$host = 'localhost';
-	$port = 3307;
-
-	$link = mysqli_init();
-	$success = mysqli_real_connect(
-	   $link,
-	   $host,
-	   $user,
-	   $password,
-	   $db,
-	   $port
-	);
-
-	/*
-	$con = mysqli_connect("localhost", "root", "root", "unityaccess", 3307);
-	*/
-	if (mysqli_connect_errno())
-	{
-		echo "1: connection failed " . mysqli_connect_error(); // error code #1 = connection failed
-		exit();
-	}
-	
-	// BOK;
+	include 'mysql_connect.php';
 	
 	$pilotid = $_POST["id"];
 	$pilotname = $_POST["name"]; // $_POST["name"];
