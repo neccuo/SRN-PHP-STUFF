@@ -1,43 +1,14 @@
 <?php
-	$user = 'root';
-	$password = 'root';
-	$db = 'unityaccess';
-	$host = 'localhost';
-	$port = 3307;
-
-	$link = mysqli_init();
-	$success = mysqli_real_connect(
-	   $link,
-	   $host,
-	   $user,
-	   $password,
-	   $db,
-	   $port
-	);
-
-	if (mysqli_connect_errno())
-	{
-		echo "1: connection failed " . mysqli_connect_error(); // error code #1 = connection failed
-		exit();
-	}
+	include 'mysql_connect.php';
 
 	mysqli_autocommit($link, false);
 
-	// CHANGED THE VALUES FOR TESTING, UPDATE THEM ACCORDINGLY LATER
     $pilotid = $_POST["pilot_id"];
 	$itemid = $_POST["item_id"];
 	$quantity = $_POST["quantity"];
 
-    $checkout_price = "SELECT pilots.name as pilot_name, pilots.credits as pilot_credits, items.price * " . $quantity . " as total_price FROM pilots, items WHERE pilots.id = " . $pilotid 
-	. " AND items.id = " . $itemid . ";";
-	$checkout_result = mysqli_query($link, $checkout_price) or die("2: Price check query failed");
+	include 'pilot_item_check.php';
 
-	$row = mysqli_fetch_assoc($checkout_result); // 1 OR 0 ROW IS EXPECTED
-	if($row == null)
-	{
-		echo "Item or Pilot couldn't be found";
-		exit();
-	}
 	$pilot_name = $row["pilot_name"];
 	$pilot_credits = intval($row["pilot_credits"]);
 	$total_price = intval($row["total_price"]);
@@ -73,7 +44,7 @@
 
 	if(empty($error)) // no errors
 	{
-	    echo("0: Transaction of *" . $quantity . "* item(s) [" . $itemid . "] by pilot [" . $pilot_name . "] for [" . $total_price . "] credits is successful.");
+	    echo("0: [BUY] Transaction of *" . $quantity . "* item(s) [" . $itemid . "] by pilot [" . $pilot_name . "] for [" . $total_price . "] credits is successful.");
 		mysqli_commit($link);
 	}
 	else // has errors
