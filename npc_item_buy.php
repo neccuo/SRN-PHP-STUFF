@@ -1,5 +1,4 @@
 <?php
-
 	$user = 'root';
 	$password = 'root';
 	$db = 'unityaccess';
@@ -29,8 +28,6 @@
 	$itemid = $_POST["item_id"];
 	$quantity = $_POST["quantity"];
 
-
-
     $checkout_price = "SELECT pilots.name as pilot_name, pilots.credits as pilot_credits, items.price * " . $quantity . " as total_price FROM pilots, items WHERE pilots.id = " . $pilotid 
 	. " AND items.id = " . $itemid . ";";
 	$checkout_result = mysqli_query($link, $checkout_price) or die("2: Price check query failed");
@@ -46,12 +43,10 @@
 	$total_price = intval($row["total_price"]);
 	if($pilot_credits < $total_price)
 	{
-		echo("" . $pilot_name . " could not afford " . strval($total_price) . " credits of item(s)");
+		echo("-1: " . $pilot_name . " could not afford " . strval($total_price) . " credits of item(s)");
 		exit();
 	}
 	$pilot_new_money = $pilot_credits - $total_price;
-	// echo($pilot_new_money);
-	// exit();
 	
 	// CREATE OR INCREMENT
 	$check_inventory = "SELECT pilots.name as pilot_name, items.name as item_name, pilot_inventories.quantity as inventory_quantity FROM pilot_inventories, pilots, items WHERE pilot_id = " . $pilotid . " AND item_id = " . $itemid
