@@ -1,7 +1,7 @@
 <?php
 	include 'mysql_connect.php';
 	
-	$pilotid = $_POST["id"];
+	$pilot_id = $_POST["id"];
 	$pilotname = $_POST["name"]; // $_POST["name"];
 	$pilotcredit = $_POST["credits"];
 	$pilotrace = $_POST["race"];
@@ -11,7 +11,7 @@
 	
 	
 	// check if id exists
-	$idcheckquery = "SELECT id FROM pilots WHERE id = " . $pilotid . ";";
+	$idcheckquery = "SELECT id FROM pilots WHERE id = " . $pilot_id . ";";
 	
 	$idcheck = mysqli_query($link, $idcheckquery) or die("2: id check query failed"); // error code #2 = name check query failed
 	if (mysqli_num_rows($idcheck) > 0)
@@ -20,7 +20,7 @@
 	}
 	
 	// strings will be inside ''
-	$insertpilotquery = "INSERT INTO pilots (id, name, credits, race, hull_id, x_axis, y_axis) VALUES (" . $pilotid . ", '" . $pilotname . "', " . $pilotcredit . ", '" . $pilotrace . "', " . $pilothullid . ", ".$x_axis.", ".$y_axis.");";
+	$insertpilotquery = "INSERT INTO pilots (id, name, credits, race, hull_id, x_axis, y_axis) VALUES (" . $pilot_id . ", '" . $pilotname . "', " . $pilotcredit . ", '" . $pilotrace . "', " . $pilothullid . ", ".$x_axis.", ".$y_axis.");";
 	// $insertpilotquery = "INSERT INTO pilots(name) VALUES (' " . $pilotname . " ');";
 	// $insertpilotquery = "INSERT INTO pilots (name, credits, race, hull_id) VALUES ('DENEME', 1500, 'human', 0);";
 	// $res = mysqli_query($link, $insertpilotquery); // or die("4: Insert Pilot query failed");
